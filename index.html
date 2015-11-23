@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<script src="jquery-1.11.3.min.js"></script>
+		<meta charset="UTF-8">
+		<title>Validação de nome</title>
+	</head>
+	<body>
+		<div id='divNomes'>
+			<div id='divNomeJogadorUm'>
+				<p>Insira um nome com pelo menos 3 caracters e uma letra maiúscula para o Jogador Um:</p>
+				<label>Nome: </label><input type='text' id='textName1'>
+				<button onclick="validarNome(1)">Validar!</button>
+				<br /><br />
+				<div id='divJogUm'></div>
+			</div>
+			<div id='divNomeJogadorDois'>
+				<p>Insira um nome com pelo menos 3 caracters e uma letra maiúscula para o Jogador Dois:</p>
+				<label>Nome: </label><input type='text' id='textName2'>
+				<button onclick="validarNome(2)">Validar!</button>
+				<br /><br />
+				<div id='divJogDois'></div>
+			</div>
+		</div>
+
+		<div id='divJogo'>
+			Aqui vai o jogo!
+		</div>
+	</body>
+</html>
+
+<script>
+	var isNomesValidadoJogUm = false;
+	var isNomesValidadoJogDois = false;
+
+	$(document).ready(function() {
+		$("#divJogo").hide();
+	});
+
+	function validarNome(jogador) {
+		
+		var validated = true;
+
+		if (jogador == 1)
+	    	var nome = $("#textName1").val();
+	    else
+	    	var nome = $("#textName2").val();
+
+	    if (nome.length >= 3) 
+	    {
+		    if (!nome.match(/^(?=.*[A-Z])/))
+		    	validated = false;
+		}
+		else
+			validated = false;
+
+		if (validated == false)
+			alert('Você precisa inserir um nome com pelo menos 3 letras e uma maiúscula!');
+		else
+			alert('Nome validado com sucesso!');
+
+
+		if (jogador == 1)
+			isNomesValidadoJogUm = validated;
+		else
+			isNomesValidadoJogDois = validated;
+
+		if (isNomesValidadoJogUm && isNomesValidadoJogDois)
+		{
+			alert("Nomes dos jogadores estão OK!");
+			$("#divNomes").hide();
+			$("#divJogo").show();
+		}
+	}
+</script>
