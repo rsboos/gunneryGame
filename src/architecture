@@ -1,0 +1,24 @@
+-Classes: obvio
+-Encapsulamento (ver como fazer depois)
+-Construtores padrao facil;
+-Espaço de nomes: nao sei ainda
+-Herança: ok
+-Polimorfismo parametrico: nao tem
+-Polimorfismo por sobrecarga (usar construtores alternativos)
+-Lambda: var adder = function (x) {
+    return function (y) {
+        return x + y;
+    };
+};
+add5 = adder(5);
+add5(1) == 6
+
+-Currying: uma conta qualquer
+-Recursao: iterar sobre uma lista qualquer
+-Delegate: onClick()
+-Pattern Matching: verificar nome de usuario com regex
+__________________________________
+Nao sei:
+-Como usar alta ordem?
+-Uso de listas para manipular estruturas, elementos em funçao de ordem maior
+
