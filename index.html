@@ -42,6 +42,7 @@
 <script>
 	var isNomesValidadoJogUm = false;
 	var isNomesValidadoJogDois = false;
+	var arrayNroCliques = [];
 
 	$(document).ready(function() {
 		$("#divJogo").hide();
@@ -51,20 +52,23 @@
 	function diminuirVida(jogador) 
 	{
 		var vida = $("#vidaJogador" + jogador).val();
-		
+
+		arrayNroCliques.push(1);
+
 		$("#vidaJogador" + jogador).val(vida -20);
 
-		if ($("#vidaJogador1").val() == 0) {
-			alert("Jogador 1 perdeu o jogo!");
+		if ($("#vidaJogador" + jogador).val() == 0) {
+			alert("Jogador " + jogador + " perdeu o jogo!");
 			$("#divJogo").remove();
 			$("#divFinalJogo").show();
+			
+			var nroCliques = arrayNroCliques.reduce(function(a, b) {
+				return a + b;
+			});
+
+			alert(nroCliques);
+
 		}
-		else 
-			if ($("#vidaJogador2").val() == 0) {
-				alert("Jogador 2 perdeu o jogo!");
-				$("#divJogo").remove();
-				$("#divFinalJogo").show();
-			}
 	}
 
 	function validarNome(jogador) 
