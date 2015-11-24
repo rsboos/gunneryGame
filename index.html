@@ -3,6 +3,7 @@
 		<script src="jquery-1.11.3.min.js"></script>
 		<meta charset="UTF-8">
 		<title>Validação de nome</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<div id='divNomes'>
@@ -24,7 +25,17 @@
 
 		<div id='divJogo'>
 			Aqui vai o jogo!
+			<progress id="vidaJogador1" value="100" max="100"></progress>
+			<button onclick="diminuirVida(1)">Diminuir Vida!</button>
+			<progress id="vidaJogador2" value="100" max="100"></progress>
+			<button onclick="diminuirVida(2)">Diminuir Vida!</button>
 		</div>
+
+		<div id='divFinalJogo'>
+			Aqui é a tela de final do jogo!
+		</div>
+
+		
 	</body>
 </html>
 
@@ -34,10 +45,30 @@
 
 	$(document).ready(function() {
 		$("#divJogo").hide();
+		$("#divFinalJogo").hide();
 	});
 
-	function validarNome(jogador) {
+	function diminuirVida(jogador) 
+	{
+		var vida = $("#vidaJogador" + jogador).val();
 		
+		$("#vidaJogador" + jogador).val(vida -20);
+
+		if ($("#vidaJogador1").val() == 0) {
+			alert("Jogador 1 perdeu o jogo!");
+			$("#divJogo").remove();
+			$("#divFinalJogo").show();
+		}
+		else 
+			if ($("#vidaJogador2").val() == 0) {
+				alert("Jogador 2 perdeu o jogo!");
+				$("#divJogo").remove();
+				$("#divFinalJogo").show();
+			}
+	}
+
+	function validarNome(jogador) 
+	{
 		var validated = true;
 
 		if (jogador == 1)
@@ -67,7 +98,7 @@
 		if (isNomesValidadoJogUm && isNomesValidadoJogDois)
 		{
 			alert("Nomes dos jogadores estão OK!");
-			$("#divNomes").hide();
+			$("#divNomes").remove();
 			$("#divJogo").show();
 		}
 	}
