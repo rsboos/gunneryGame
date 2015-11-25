@@ -167,7 +167,7 @@ gameSpace.Match.prototype.startMatch = function()
 	}, false);
 
 	var html = '<div style="display:inline-block; margin-left: 5px;"><progress id="vidaJogador0" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
-	var html2 = '<div style="display:inline-block; margin-left: 100px;"><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
+	var html2 = '<div style="display:inline-block; margin-left: 450px;"><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
 	html = html + html2;
 	$("#divVida").html(html);
 
