@@ -7,15 +7,18 @@ objects.PhysicalElement = function PhysicalElement() {
 }
 
 objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates) {
+	console.log(coordinates);
+	console.log(color);
   this.color=color;
   this.isColider = isColider;
   this.type = type;
-  this.coordinates = coordinates;
+  this.coordinates = coordinates.slice();
 }
 
-objects.PhysicalElement.prototype.render=function() { // polimorfismo por inclusao
-    context.fillStyle(this.color);
-    context.fillRect(this.coordinates[0],this.coordinates[1],this.coordinates[2],this.coordinates[4]);
+objects.PhysicalElement.prototype.render=function(ctx) { // polimorfismo por inclusao
+    //console.log(ctx);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.coordinates[0],this.coordinates[1],this.coordinates[2],this.coordinates[4]);
 }
 
 

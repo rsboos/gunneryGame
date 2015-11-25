@@ -5,6 +5,7 @@
 	}
 
 	gameSpace.Match.prototype.init=function() {
+
 	  this.lifesAvailable=5;
 	  this.WhoPlays=1;
 	  this.healthPlayer1=this.lifesAvailable;
@@ -61,7 +62,7 @@
 		        		velocity = Math.min(1500,velocity);
 		        		console.log("Key pressed for "+timePressed.toString()+" units of time. Now "+turn.toString()+" plays.");
 		        		hit = elements.Ball.fire(velocity,whoPlays);
-		        	
+		        		
 						if (hit) {
 							healthPlayer[enemy]--;
 							if (this.isFinished()) {
@@ -77,7 +78,10 @@
 	}
 
 	gameSpace.Match.prototype.startMatch = function() {
-		var elements = {}; // this array contains information about all elements
+		var elements = []; // this array contains information about all elements
+		var scenarioObj = new objects.Scenario("#0000FF",false,[0,0,800,400]);
+		console.log(scenarioObj.coordinates);
+		elements.push(scenarioObj);
 		var board = new gameSpace.Board().init(800,400,"gameCanvas",elements);
 		console.log(board.width);
 		var step = function() {
@@ -85,9 +89,7 @@
 			board.animate(step);
 		};
 		board.animate(step);
-			//board.render();
-			console.log("player "+this.WhoPlays.toString()+ " turn!");
-			//this.doRound();
+		console.log("player "+this.WhoPlays.toString()+ " turn!");
 
 	}
 
