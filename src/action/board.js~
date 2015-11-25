@@ -38,7 +38,7 @@
     var i;
     ctx = $("#"+this.canvasID)[0].getContext('2d');
     //    console.log(ctx);
-	console.log(this.elements.length);
+	this.elements[i].length;
     for (i=0; i < this.elements.length; i++) {
       if (this.elements[i] instanceof Array) {
         var j;
