@@ -40,7 +40,6 @@ objects.Ball.prototype.fire = function(initVelocity,angle,player) {
 	//sleep(16);
 	index++;
         if ((yPos < 0 - 10) || (xPos < 0) || (xPos > width)) {
-		console.log("Velocity was: "+timeP.toString()+" y center:");
 	    return false; 
         }
         else {
