@@ -145,6 +145,7 @@ gameSpace.Match.prototype.startMatch = function()
 
 					alert("Fim de jogo!");
 						$("#divVida").remove();
+						$("#divJogo").remove();
 						$("#gameCanvas").remove();
 						$("#divFinalJogo").show();
 						$("#divFinalJogo").html("<center><h1>" + nomeGanhador + " venceu o jogo!" + "</h1></center>");
@@ -165,10 +166,9 @@ gameSpace.Match.prototype.startMatch = function()
 		}
 	}, false);
 
-	var html = '<table><td><progress id="vidaJogador0" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></td>';
-	var html2 = '<td><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></td>';
-	var html3 = '<tr><td><button onclick="diminuirVida(0)">Diminuir Vida!</button></td><td><button onclick="diminuirVida(1)">Diminuir Vida!</button></td></tr></table>';
-	html = html + html2 + html3;
+	var html = '<div style="display:inline-block; margin-left: 5px;"><progress id="vidaJogador0" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
+	var html2 = '<div style="display:inline-block; margin-left: 100px;"><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
+	html = html + html2;
 	$("#divVida").html(html);
 
 	var match;

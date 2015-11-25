@@ -39,16 +39,12 @@
 				<div id='divJogDois' style='color: red;'></div>
 			</div>
 		</div>
-
 		<div id='divJogo'>
 		</div>
-		
 		<div id='divVida'>
 		</div>
-
 		<div id='divFinalJogo'>
 		</div>
-	
 	</body>
 </html>
 
@@ -140,7 +136,7 @@
 		{
 			alert("Nomes dos jogadores estão OK!");
 			$("#divNomes").remove();
-			$("#divJogo").html("<table><tr><td>Jogador 1: " + nomeJogadorUm + "</td><td>" + "Jogador 2: " + nomeJogadorDois + "</tr></table>");
+			$("#divJogo").html("<div style='display:inline-block; margin-left: 5px;'>Jogador 1: " + nomeJogadorUm + "</div><div style='display:inline-block; margin-left: 150px;'>Jogador Dois: " + nomeJogadorDois + "</div>");
 			$("#divJogo").show();
 			$("#divVida").show();
 			currentGame = new gameSpace.Match().initLifes(5);
