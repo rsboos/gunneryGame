@@ -72,6 +72,8 @@ gameSpace.Match.prototype.startMatch = function()
 	console.log(this);
 
 	var curPlayer = this.WhoPlays;
+
+	match = this;
 	
 	document.addEventListener('keydown', function(e) 
 	{
@@ -119,11 +121,35 @@ gameSpace.Match.prototype.startMatch = function()
 	        board.elements.push(ball);
 	        console.log(board);
 	        hit = board.elements[board.elements.length-1].fire(velocity,cannonElem.getDegrees(),curPlayer);
-
+	        hit = true;
 			if (hit) 
 			{
 				board.elements.pop();
-				//healthPlayer[enemy]--;
+				if (curPlayer == 0) 
+				{
+					match.healthPlayer2 = match.healthPlayer2- 1;
+					$("#vidaJogador1").val(match.healthPlayer2);
+				}
+				else
+				{
+					match.healthPlayer1 = match.healthPlayer1 - 1;
+					$("#vidaJogador0").val(match.healthPlayer1);
+				}
+
+				if (match.isFinished())
+				{
+					if (match.healthPlayer1 == 0)
+						var nomeGanhador = nomeJogadorDois;
+					else
+						var nomeGanhador = nomeJogadorUm;
+
+					alert("Fim de jogo!");
+						$("#divVida").remove();
+						$("#gameCanvas").remove();
+						$("#divFinalJogo").show();
+						$("#divFinalJogo").html("<center><h1>" + nomeGanhador + " venceu o jogo!" + "</h1></center>");
+				}
+
 				curPlayer = Math.abs(curPlayer-1);
 			}
 			else 
@@ -133,8 +159,7 @@ gameSpace.Match.prototype.startMatch = function()
 				curPlayer = Math.abs(curPlayer-1);
 			}				
 			
-			/*if (this.isFinished())
-			renderGameOver();*/
+			
 			console.log(curPlayer);
 
 		}
@@ -145,4 +170,6 @@ gameSpace.Match.prototype.startMatch = function()
 	var html3 = '<tr><td><button onclick="diminuirVida(0)">Diminuir Vida!</button></td><td><button onclick="diminuirVida(1)">Diminuir Vida!</button></td></tr></table>';
 	html = html + html2 + html3;
 	$("#divVida").html(html);
+
+	var match;
 }
