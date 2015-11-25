@@ -13,6 +13,10 @@ objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates
   this.isColider = isColider;
   this.type = type;
   this.coordinates = coordinates.slice();
+  this.top = this.coordinates[1];
+  this.bottom = this.coordinates[1] + this.coordinates[3];
+  this.left = this.coordinates[0];
+  this.right = this.coordinates[0] + this.coordinates[2];
 }
 
 objects.PhysicalElement.prototype.render=function(ctx) { // polimorfismo por inclusao

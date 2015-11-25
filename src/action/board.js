@@ -18,9 +18,12 @@
   }).css({
       width: width + 'px',
       height: height + 'px'
-  }).appendTo('body');
 
+  }).appendTo('body');
+    $("#"+canvasID)[0].width = width;
+      $("#"+canvasID)[0].height = height;
   });
+
     this.elements = elements;
       return this;
   }
@@ -35,12 +38,9 @@
     var i;
     ctx = $("#"+this.canvasID)[0].getContext('2d');
     console.log(ctx);
-    ctx.fillStyle = "#0000FF";
-    ctx.fillRect(0,0,400,100);
+
     for (i=0; i < this.elements.length; i++) {
-      
-     // console.log("rendering "+i.toString());
-     // this.elements[i].render(ctx);
+      this.elements[i].render(ctx);
     }
   
   }

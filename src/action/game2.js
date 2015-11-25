@@ -82,9 +82,14 @@
 		height = 400;
 		var elements = []; // this array contains information about all elements
 		var scenarioObj = new objects.Scenario("#0000FF",false, "square", [0,0,width,height]);
-		var floorObj = new objects.Floor("#00FF00",false, "square", [0,height/4,width,height/4]);
+		var floorObj = new objects.Floor("#00FF00",true, "square", [0,height-70,width,70]);
+		var Fortress1 = new objects.Fortress("#8B4513",false, "square", [15,floorObj.top-50,50,50]);
+		var Fortress2 = new objects.Fortress("#8B4513",false, "square", [width-15-50,floorObj.top-50,50,50]);
+		var floorObj = new objects.Floor("#00FF00",false, "square", [0,height-70,width,70]);
 		elements.push(scenarioObj);
 		elements.push(floorObj);
+		elements.push(Fortress1);
+		elements.push(Fortress2);
 		
 		console.log(elements);
 		var board = new gameSpace.Board().init(width,height,"gameCanvas",elements);
@@ -95,7 +100,8 @@
 		};
 		//board.animate(step);
 		$( document ).ready(function() {
-		board.renderAll();
+			
+			board.renderAll();
 		});
 		console.log("player "+this.WhoPlays.toString()+ " turn!");
 
