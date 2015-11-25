@@ -14,11 +14,13 @@ objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates
   this.type = type;
   this.coordinates = coordinates.slice();
   this.top = this.coordinates[1];
-  this.bottom = this.coordinates[1] + this.coordinates[3];
   this.left = this.coordinates[0];
-  this.right = this.coordinates[0] + this.coordinates[2];
-  this.width = coordinates[2];
-  this.height = coordinates[3];
+  if (this.coordinates.length == 4) {  
+    this.bottom = this.coordinates[1] + this.coordinates[3];
+    this.right = this.coordinates[0] + this.coordinates[2];
+    this.width = coordinates[2];
+    this.height = coordinates[3];
+  }
 }
 
 objects.PhysicalElement.prototype.render=function(ctx) { // polimorfismo por inclusao

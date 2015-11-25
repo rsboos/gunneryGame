@@ -84,28 +84,38 @@
 	    		lastKey = e.which; }, false);
 		var shootDone = false;
 			
-		document.addEventListener('keydown', function(e) {
+		document.addEventListener('keyup', function(e) {
 		    if (e.which == 32) { // SPACE
+		  		for (i=0; i < board.elements.length; i++)
+					if (board.elements[i] instanceof Array)
+						if (board.elements[i][0] instanceof objects.Fortress)
+							cannonElem = board.elements[i][curPlayer].cannon;
 		  		shootDone=true;
 		        var d = new Date();
 		        var timeAfter = d.getTime();
 		        velocity = timeAfter - timeBefore;
 		        velocity = Math.min(1500,velocity);
 		        console.log("Key pressed for "+velocity.toString()+" units of time.");
-		        hit = ball.fire(velocity,curPlayer);
-		        		
-						if (hit) {
-							healthPlayer[enemy]--;
-							if (this.isFinished()) {
-								renderGameOver();
-							}
-							this.WhoPlays = enemy;
-						}
-						else
-							this.WhoPlays = enemy;
-						console.log(curPlayer);
+		        var ball = new objects.Ball("#FFFFFF",true,"circle",[cannonElem.left,cannonElem.top,5]);
+		        board.elements.push(ball);
+		        console.log(board);
+		        hit = board.elements[board.elements.length-1].fire(velocity,cannonElem.getDegrees(),curPlayer);
+				
+				if (hit) {
+						board.elements.pop();
+						//healthPlayer[enemy]--;
+						curPlayer = Math.abs(curPlayer-1);
 					}
-				}, false);
+					else {
+						console.log(board);
+						//board.elements.pop();
+						curPlayer = Math.abs(curPlayer-1);
+					}				
+						/*if (this.isFinished())
+						renderGameOver();*/
+					console.log(curPlayer);
+				}
+			}, false);
 
 	}
 

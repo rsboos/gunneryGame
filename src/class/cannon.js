@@ -28,3 +28,7 @@ objects.Cannon.prototype.makeRotation = function(degrees) {
 	ret=Math.min(90,ret);
 	this.degrees = -ret;
 }
+
+objects.Cannon.prototype.getDegrees = function() {
+	return this.degrees;
+}
