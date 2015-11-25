@@ -125,7 +125,7 @@ function releaseBall(timeP,curPlayer,cannonRot) {
         var yPos = vInity*time+0.5*a*time*time;
         var xPos = Math.abs(vInitx*time);
     //console.log("ycenter: "+yPos.toString());
-        index++;
+    index++;
         if ((yPos < 0 - 10) || (xPos < 0) || (xPos > width)) {
             console.log("Velocity was: "+timeP.toString()+" y center:");
         }

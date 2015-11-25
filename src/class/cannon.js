@@ -20,3 +20,11 @@ objects.Cannon.prototype.render = function(context) {
     context.fillRect(0, 0, this.width, this.height);
     context.restore();
 }
+
+objects.Cannon.prototype.makeRotation = function(degrees) {
+	console.log("rotating");
+	ret = Math.abs(degrees+this.degrees);
+	ret=Math.max(0,ret);
+	ret=Math.min(90,ret);
+	this.degrees = -ret;
+}

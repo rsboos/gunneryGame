@@ -7,7 +7,7 @@
 	gameSpace.Match.prototype.init=function() {
 
 	  this.lifesAvailable=5;
-	  this.WhoPlays=1;
+	  this.WhoPlays=0;
 	  this.healthPlayer1=this.lifesAvailable;
 	  this.healthPlayer2=this.lifesAvailable;
 	  this.objectElements = [];
@@ -15,7 +15,7 @@
 	}
 	gameSpace.Match.prototype.initLifes=function(numberOfLifes) {
 	  this.lifesAvailable=numberOfLifes;
-	  this.WhoPlays=1;
+	  this.WhoPlays=0;
 	  this.healthPlayer1=this.lifesAvailable;
 	  this.healthPlayer2=this.lifesAvailable;
 	  this.objectElements = [];
@@ -27,42 +27,12 @@
 	}
 
 	gameSpace.Match.prototype.doRound= function() {
-		if (this.whoPlays == 0)
+		if (this.WhoPlays == 0)
 			enemy = 1;
 		else
 			enemy = 0;
 		
-		var lastKey = 0;
-		var timeBefore;
-		var shootDone = false;
-			
-			renderAll();
-
-			
-
-			
-			document.addEventListener('keydown', function(e) {
-		  		    if (e.which == 32) { // SPACE
-		  		    	shootDone=true;
-		        		var d = new Date();
-		        		var timeAfter = d.getTime();
-		        		velocity = timeAfter - timeBefore;
-		        		velocity = Math.min(1500,velocity);
-		        		console.log("Key pressed for "+timePressed.toString()+" units of time. Now "+turn.toString()+" plays.");
-		        		hit = elements.Ball.fire(velocity,whoPlays);
-		        		
-						if (hit) {
-							healthPlayer[enemy]--;
-							if (this.isFinished()) {
-								renderGameOver();
-							}
-							this.whoPlays = enemy;
-						}
-						else
-							this.whoPlays = enemy;
-						console.log(this.whoPlays);
-					}
-				}, false);
+		
 	}
 
 	gameSpace.Match.prototype.startMatch = function() {
@@ -71,13 +41,14 @@
 		var elements = []; // this array contains information about all elements
 		var scenarioObj = new objects.Scenario("#0000FF",false, "square", [0,0,width,height]);
 		var floorObj = new objects.Floor("#00FF00",true, "square", [0,height-70,width,70]);
-		var Fortress1 = new objects.Fortress("#8B4513",false, "square", [15,floorObj.top-50,50,50],0);
-		var Fortress2 = new objects.Fortress("#8B4513",false, "square", [width-15-50,floorObj.top-50,50,50],1);
+		var Fort = [];
+		Fort.push(new objects.Fortress("#8B4513",false, "square", [15,floorObj.top-50,50,50],0))
+		Fort.push(new objects.Fortress("#8B4513",false, "square", [width-15-50,floorObj.top-50,50,50],1));
 		var floorObj = new objects.Floor("#00FF00",false, "square", [0,height-70,width,70]);
 		elements.push(scenarioObj);
 		elements.push(floorObj);
-		elements.push(Fortress1);
-		elements.push(Fortress2);
+		elements.push(Fort);
+
 		
 		console.log(elements);
 		var board = new gameSpace.Board().init(width,height,"gameCanvas",elements);
@@ -87,11 +58,22 @@
 			board.animate(step);
 		};
 		board.animate(step);
+		var lastKey = 0;
+		var timeBefore;
+		console.log(this);
+		var curPlayer = this.WhoPlays;
 		document.addEventListener('keydown', function(e) {
+				var i;
+				var cannonElem;
+				for (i=0; i < board.elements.length; i++)
+					if (board.elements[i] instanceof Array)
+						if (board.elements[i][0] instanceof objects.Fortress)
+							cannonElem = board.elements[i][curPlayer].cannon;
+
 				if (e.which==38) // UP
-	        		this.elements.Fort[this.whoPlays].Cannon.rotate(-1);
+	        		cannonElem.makeRotation(-1);
 	   		    else if (e.which==40) // DOWN
-	        		this.elements.Fort[this.whoPlays].Cannon.rotate(1);
+	        		cannonElem.makeRotation(1);
 	            else if (e.which == 32) { // SPACE
 	                if (lastKey != 32) {
 	            		console.log("first key down SPACE");
@@ -100,7 +82,30 @@
 	        		}
 	            }
 	    		lastKey = e.which; }, false);
-		console.log("player "+this.WhoPlays.toString()+ " turn!");
+		var shootDone = false;
+			
+		document.addEventListener('keydown', function(e) {
+		    if (e.which == 32) { // SPACE
+		  		shootDone=true;
+		        var d = new Date();
+		        var timeAfter = d.getTime();
+		        velocity = timeAfter - timeBefore;
+		        velocity = Math.min(1500,velocity);
+		        console.log("Key pressed for "+velocity.toString()+" units of time.");
+		        hit = ball.fire(velocity,curPlayer);
+		        		
+						if (hit) {
+							healthPlayer[enemy]--;
+							if (this.isFinished()) {
+								renderGameOver();
+							}
+							this.WhoPlays = enemy;
+						}
+						else
+							this.WhoPlays = enemy;
+						console.log(curPlayer);
+					}
+				}, false);
 
 	}
 
