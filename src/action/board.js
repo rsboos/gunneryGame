@@ -37,9 +37,10 @@
   gameSpace.Board.prototype.renderAll=function() {
     var i;
     ctx = $("#"+this.canvasID)[0].getContext('2d');
-    console.log(ctx);
+    //console.log(ctx);
 
     for (i=0; i < this.elements.length; i++) {
+
       this.elements[i].render(ctx);
     }
   

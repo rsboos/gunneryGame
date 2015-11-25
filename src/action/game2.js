@@ -38,19 +38,7 @@
 			
 			renderAll();
 
-			document.addEventListener('keydown', function(e) {
-				if (e.which==38) // UP
-	        		this.elements.Fort[this.whoPlays].Cannon.rotate(-1);
-	   		    else if (e.which==40) // DOWN
-	        		this.elements.Fort[this.whoPlays].Cannon.rotate(1);
-	            else if (e.which == 32) { // SPACE
-	                if (lastKey != 32) {
-	            		console.log("first key down SPACE");
-	            		var d = new Date();
-	            		timeBefore = d.getTime();
-	        		}
-	            }
-	    		lastKey = e.which; }, false);
+			
 
 			
 			document.addEventListener('keydown', function(e) {
@@ -83,8 +71,8 @@
 		var elements = []; // this array contains information about all elements
 		var scenarioObj = new objects.Scenario("#0000FF",false, "square", [0,0,width,height]);
 		var floorObj = new objects.Floor("#00FF00",true, "square", [0,height-70,width,70]);
-		var Fortress1 = new objects.Fortress("#8B4513",false, "square", [15,floorObj.top-50,50,50]);
-		var Fortress2 = new objects.Fortress("#8B4513",false, "square", [width-15-50,floorObj.top-50,50,50]);
+		var Fortress1 = new objects.Fortress("#8B4513",false, "square", [15,floorObj.top-50,50,50],0);
+		var Fortress2 = new objects.Fortress("#8B4513",false, "square", [width-15-50,floorObj.top-50,50,50],1);
 		var floorObj = new objects.Floor("#00FF00",false, "square", [0,height-70,width,70]);
 		elements.push(scenarioObj);
 		elements.push(floorObj);
@@ -98,11 +86,20 @@
 			board.renderAll();
 			board.animate(step);
 		};
-		//board.animate(step);
-		$( document ).ready(function() {
-			
-			board.renderAll();
-		});
+		board.animate(step);
+		document.addEventListener('keydown', function(e) {
+				if (e.which==38) // UP
+	        		this.elements.Fort[this.whoPlays].Cannon.rotate(-1);
+	   		    else if (e.which==40) // DOWN
+	        		this.elements.Fort[this.whoPlays].Cannon.rotate(1);
+	            else if (e.which == 32) { // SPACE
+	                if (lastKey != 32) {
+	            		console.log("first key down SPACE");
+	            		var d = new Date();
+	            		timeBefore = d.getTime();
+	        		}
+	            }
+	    		lastKey = e.which; }, false);
 		console.log("player "+this.WhoPlays.toString()+ " turn!");
 
 	}
