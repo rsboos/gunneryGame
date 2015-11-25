@@ -1,31 +1,22 @@
-var objects = {} || objects;
-
-function PhysicalElement() {
-  //Initialization for all Animals
+if (objects === undefined) {
+  var objects = {};
 }
 
-//Function and properties shared by all instances of Animal
-PhysicalElement.prototype.init=function(spriteImg,isColider) {
-  this.sprite=spriteImg;
+objects.PhysicalElement = function PhysicalElement() {
+  throw "Error - Abstract Class";
+}
+
+objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates) {
+  this.color=color;
   this.isColider = isColider;
-}
-PhysicalElement.prototype.getPosition=function(){ // polimorfismo por inclusao
-    console.log("getting position");
-}
-
-function Fortress(spriteImg,isColider) {
-    this.init(spriteImg,isColider);
-
-}
-//Function and properties shared by all instances of Cat    
-Fortress.prototype=new PhysicalElement();
-
-function Ball(spriteImg,isColider) {
-    this.init(spriteImg,isColider);
+  this.type = type;
+  this.coordinates = coordinates;
 }
 
-Ball.prototype=new PhysicalElement();
+objects.PhysicalElement.prototype.render=function() { // polimorfismo por inclusao
+    context.fillStyle(this.color);
+    context.fillRect(this.coordinates[0],this.coordinates[1],this.coordinates[2],this.coordinates[4]);
+}
 
-ball1 = new Ball("sprite.jpg",true);
-console.log(ball1.sprite);
+
 

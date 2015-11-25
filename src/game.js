@@ -130,7 +130,7 @@ function releaseBall(timeP,curPlayer,cannonRot) {
             console.log("Velocity was: "+timeP.toString()+" y center:");
         }
         else {
-            setTimeout(advance, 5);
+            setTimeout(advance, 16);
         }
       
     }

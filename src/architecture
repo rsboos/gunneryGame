@@ -21,4 +21,18 @@ __________________________________
 Nao sei:
 -Como usar alta ordem?
 -Uso de listas para manipular estruturas, elementos em funçao de ordem maior
-
+__________________________________________________________________
+-Definiçao e uso de classes: ok
+-Encapsulamento: nao tem
+-Construtores: ok
+-Namespaces: ok
+-Herança: ok
+-Polimorfismo parametrico: pensar em algo
+-Construtores alternativos: diferentes tipos de objetos em object ou match default / parametros definidos ok
+-Funcoes como primeira ordem: ok michel
+-Funcoes ordem maior / uso de listas: ok michel
+-funçoes lambda: ?na propria atribuiçao de funçoes das classes ok 
+-currying: ?
+-pattern matching: ok michel
+-recursao: pensar em algo
+-uso de delegates: pensar em algo
