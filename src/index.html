@@ -13,7 +13,7 @@
 
 		<script type='text/javascript' src='class/ball.js'></script>
 		<script type='text/javascript' src='class/floor.js'></script>
-		<script type='text/javascript' src='action/game2.js'></script>
+		<script type='text/javascript' src='action/game.js'></script>
 		<style>
 			body {
 				padding: 0px;
@@ -61,34 +61,7 @@
 		$("#divFinalJogo").hide();
 	});
 
-	function diminuirVida(jogador) 
-	{
-		var vida = $("#vidaJogador" + jogador).val();
-
-		arrayNroCliques.push(1);
-		
-		$("#vidaJogador" + jogador).val(vida -1);
-
-		if ($("#vidaJogador" + jogador).val() == 0) {
-			alert("Fim de jogo!");
-			$("#divJogo").remove();
-			$("#divVida").remove();
-			$("#gameCanvas").remove();
-			$("#divFinalJogo").show();
-			
-			nomeGanhador = jogador == 0 ? nomeJogadorDois : nomeJogadorUm;
-			
-			$("#divFinalJogo").html("<center><h1>" + nomeGanhador + "venceu o jogo!" + "</h1></center>");
-			
-			soma = somarNroRodadas(arrayNroRounds);
-			alert(soma);
-			
-			var nroCliques = arrayNroCliques.reduce(function(a, b) {
-				return a + b;
-			});
-		}
-	}
-
+	
 	function validarNome(jogador) 
 	{
 		var validated = true;
@@ -134,6 +107,9 @@
 
 		if (isNomesValidadoJogUm && isNomesValidadoJogDois)
 		{
+			isNomesValidadoJogDois = null;
+			isNomesValidadoJogUm = null;
+			validated = null;
 			alert("Nomes dos jogadores estão OK!");
 			$("#divNomes").remove();
 			$("#divJogo").html("<div style='display:inline-block; margin-left: 5px;'>Jogador 1: " + nomeJogadorUm + "</div><div style='display:inline-block; margin-left: 500px;'>Jogador Dois: " + nomeJogadorDois + "</div>");

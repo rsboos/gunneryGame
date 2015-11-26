@@ -40,18 +40,7 @@
     //    console.log(ctx);
 	//console.log(this.elements.length);
     for (i=0; i < this.elements.length; i++) {
-      if (this.elements[i] instanceof Array) {
-        var j;
-        for (j=0; j < this.elements[i].length; j++) {
-          this.elements[i][j].render(ctx);
-        }
-      }
-      else {
-	if (this.elements[i] instanceof objects.Ball) {
-		//console.log("Top: "+this.elements[i].top.toString()+" Left: "+this.elements[i].left.toString());
-	}
-        this.elements[i].render(ctx);
-		}
+      this.elements[i].render(ctx);
     }
   
   }
