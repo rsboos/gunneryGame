@@ -19,8 +19,8 @@ objects.Ball.prototype.render = function(context) {
 
 objects.Ball.prototype.fire = function(initVelocity,angle,player) {
 	var index=1;
-	var vInit=initVelocity/10;
-    vInit = Math.min(50,vInit);
+	var vInit=initVelocity/15;
+    vInit = Math.min(100,vInit);
     var theta = Math.abs(angle)*Math.PI/180.0;
     var vInity = vInit*Math.sin(theta);
     var vInitx = vInit*Math.cos(theta);
@@ -30,25 +30,23 @@ objects.Ball.prototype.fire = function(initVelocity,angle,player) {
     var yPos,xPos;
 
  	var that = this;
+  var deferred = $.Deferred();
  	var advance = function () {
      	var time = index/20;
-	that.left = that.initialX+1*vInitx*time;
-	that.top = that.initialY-1*vInity*time-1*0.5*a*time*time;
+	that.left = that.initialX+4*vInitx*time;
+	that.top = that.initialY-4*vInity*time-4*0.5*a*time*time;
 	console.log("Top: "+that.top.toString()+" Left: "+that.left.toString());
 	yPos = vInity*time+0.5*a*time*time;
 	xPos = Math.abs(vInitx*time);
 	//sleep(16);
 	index++;
-        if ((yPos < 0 - 10) || (xPos < 0) || (xPos > width)) {
-	    return false; 
+        if ((that.top > 330) || (xPos < 0) || (xPos > width)) {
+	      deferred.resolve(true);         
         }
         else {
-            setTimeout(advance, 5);
+            setTimeout(advance, 8);
         }
  	};
 	advance();
-
-    
-    
-	
+  return deferred.promise();
 }

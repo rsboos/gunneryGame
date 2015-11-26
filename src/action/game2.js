@@ -71,7 +71,7 @@ gameSpace.Match.prototype.startMatch = function()
 	var timeBefore;
 	console.log(this);
 
-	var curPlayer = this.WhoPlays;
+	var match = this;
 	
 	document.addEventListener('keydown', function(e) 
 	{
@@ -80,7 +80,7 @@ gameSpace.Match.prototype.startMatch = function()
 		for (i=0; i < board.elements.length; i++)
 			if (board.elements[i] instanceof Array)
 				if (board.elements[i][0] instanceof objects.Fortress)
-					cannonElem = board.elements[i][curPlayer].cannon;
+					cannonElem = board.elements[i][match.WhoPlays].cannon;
 
 		if (e.which==38) // UP
     		cannonElem.makeRotation(-1);
@@ -107,7 +107,7 @@ gameSpace.Match.prototype.startMatch = function()
 	  		for (i=0; i < board.elements.length; i++)
 				if (board.elements[i] instanceof Array)
 					if (board.elements[i][0] instanceof objects.Fortress)
-						cannonElem = board.elements[i][curPlayer].cannon;
+						cannonElem = board.elements[i][match.WhoPlays].cannon;
 	  		
 	  		shootDone=true;
 	        var d = new Date();
@@ -118,31 +118,44 @@ gameSpace.Match.prototype.startMatch = function()
 	        var ball = new objects.Ball("#FFFFFF",true,"circle",[cannonElem.left,cannonElem.top,5]);
 	        board.elements.push(ball);
 	        console.log(board);
-	        hit = board.elements[board.elements.length-1].fire(velocity,cannonElem.getDegrees(),curPlayer);
+	        var hit = board.elements[board.elements.length-1].fire(velocity,cannonElem.getDegrees(),match.WhoPlays);
+	        hit.then(function(result) {
 
-			if (hit) 
-			{
-				board.elements.pop();
-				//healthPlayer[enemy]--;
-				curPlayer = Math.abs(curPlayer-1);
-			}
-			else 
-			{
-				console.log(board);
-				//board.elements.pop();
-				curPlayer = Math.abs(curPlayer-1);
-			}				
-			
-			/*if (this.isFinished())
-			renderGameOver();*/
-			console.log(curPlayer);
+	        	board.elements.pop();
+	        	if (result) {
+ 					if(match.WhoPlays == 0) {
+ 						match.healthPlayer2--;
+ 						$("#vidaJogador1").val(match.healthPlayer2);
+ 						
+ 					}
+ 					else {
+ 						match.healthPlayer1--;
+ 						$("#vidaJogador0").val(match.healthPlayer1);
+ 						
+ 					}
+ 				if (match.isFinished()) {
+ 					if (match.healthPlayer1 == 0)
+						var nomeGanhador = nomeJogadorDois;
+					else
+						var nomeGanhador = nomeJogadorUm;
+					alert("Fim de jogo!");
+					$("#divVida").remove();
+					$("#divJogo").remove();
+						$("#gameCanvas").remove();
 
+						$("#divFinalJogo").show();
+						$("#divFinalJogo").html("<center><h1>" + nomeGanhador + " venceu o jogo!" + "</h1></center>");
+ 				}
+ 			}
+ 			match.WhoPlays =Math.abs(match.WhoPlays-1);
+ 			console.log(match.WhoPlays);
+
+	        });
 		}
 	}, false);
 
-	var html = '<table><td><progress id="vidaJogador0" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></td>';
-	var html2 = '<td><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></td>';
-	var html3 = '<tr><td><button onclick="diminuirVida(0)">Diminuir Vida!</button></td><td><button onclick="diminuirVida(1)">Diminuir Vida!</button></td></tr></table>';
-	html = html + html2 + html3;
+	var html = '<div style="display:inline-block; margin-left: 5px;"><progress id="vidaJogador0" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
+	var html2 = '<div style="display:inline-block; margin-left: 450px;"><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
+	html = html + html2;
 	$("#divVida").html(html);
 }
