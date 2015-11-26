@@ -75,6 +75,7 @@ gameSpace.Match.prototype.startMatch = function()
 	
 	document.addEventListener('keydown', function(e) 
 	{
+		arrayNroRounds.push(1);
 		var i;
 		var cannonElem;
 		for (i=0; i < board.elements.length; i++)
@@ -137,14 +138,15 @@ gameSpace.Match.prototype.startMatch = function()
 						var nomeGanhador = nomeJogadorDois;
 					else
 						var nomeGanhador = nomeJogadorUm;
+
 					alert("Fim de jogo!");
 					$("#divVida").remove();
 					$("#divJogo").remove();
-						$("#gameCanvas").remove();
-
-						$("#divFinalJogo").show();
-						$("#divFinalJogo").html("<center><h1>" + nomeGanhador + " venceu o jogo!" + "</h1></center>");
- 				}
+					$("#gameCanvas").remove();
+					var soma = somaNroRounds(arrayNroRounds);
+					$("#divFinalJogo").show();
+					$("#divFinalJogo").html("<center><h1>" + nomeGanhador + " venceu o jogo!" + "</h1><br /><b>Número de rounds: </b>" + soma + "</center>");
+				}
  			}
  			match.WhoPlays =Math.abs(match.WhoPlays-1);
  			console.log(match.WhoPlays);
@@ -157,4 +159,14 @@ gameSpace.Match.prototype.startMatch = function()
 	var html2 = '<div style="display:inline-block; margin-left: 450px;"><progress id="vidaJogador1" value=' + this.lifesAvailable + ' max=' + this.lifesAvailable + '></progress></div>';
 	html = html + html2;
 	$("#divVida").html(html);
+
+	var arrayNroRounds = [];
+}
+
+function somaNroRounds(array)
+{
+	if (array.length == 1)
+		return array.pop();
+	else
+		return array.pop() + somaNroRounds(array);
 }
