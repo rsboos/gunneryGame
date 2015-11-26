@@ -3,7 +3,7 @@ if (objects === undefined)
 
 objects.Ball = function Ball(color,isColider,type,coordinates) {
     this.init(color,isColider,type,coordinates);
-   	this.radius = coordinates[2];
+   	
    	this.initialX = coordinates[0];
    	this.initialY = coordinates[1];
 }
@@ -11,13 +11,14 @@ objects.Ball.prototype = Object.create(objects.PhysicalElement.prototype);
 
 objects.Ball.prototype.render = function(context) {
 	//console.log("rendering ball ");
-	context.fillStyle = this.color;
-    context.beginPath();
-    context.arc(this.left, this.top, this.radius, 2 * Math.PI,false);
-    context.fill();
+  context.save();
+  context.translate(this.left, this.top);
+  console.log(this.color);
+  context.drawImage(this.color,0,0,17,17);
+  context.restore();  
 }
 
-objects.Ball.prototype.fire = function(initVelocity,angle,player,elements) {
+objects.Ball.prototype.fire = function(initVelocity,angle,curPlayer,elements) {
 	var index=1;
 	var vInit=initVelocity/15;
     vInit = Math.min(100,vInit);
@@ -25,7 +26,7 @@ objects.Ball.prototype.fire = function(initVelocity,angle,player,elements) {
     var vInity = vInit*Math.sin(theta);
     var vInitx = vInit*Math.cos(theta);
     var a=-9.8;
-    if (player == 1)
+    if (curPlayer == 1)
     	vInitx=-vInitx;
     var yPos,xPos;
 
@@ -54,7 +55,7 @@ objects.Ball.prototype.fire = function(initVelocity,angle,player,elements) {
 	xPos = Math.abs(vInitx*time);
 	//sleep(16);
   function isCol(elem) {
-    return elem.isColided([that.left,that.top]);
+    return elem.isColided([that.left,that.top,17,17]);
   }
   var colidedNow = colisionElements.filter(isCol);
 	index++;
@@ -62,7 +63,7 @@ objects.Ball.prototype.fire = function(initVelocity,angle,player,elements) {
           var i;
           for (i=0; i < colidedNow.length; i++) {
             if (colidedNow[i] instanceof objects.Fortress) {
-              if (colidedNow[i].player != player)
+              if (colidedNow[i].player != curPlayer)
                 deferred.resolve(true);
               else
                 deferred.resolve(false);
