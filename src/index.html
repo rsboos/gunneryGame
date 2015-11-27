@@ -14,40 +14,82 @@
 
 		<script type='text/javascript' src='class/ball.js'></script>
 		<script type='text/javascript' src='class/floor.js'></script>
-		<script type='text/javascript' src='action/game.js'></script>
+		<script type='text/javascript' src='action/match.js'></script>
 		<style>
+		@font-face {
+			    font-family: neve;
+			    src: url(frosw.ttf);
+			}
 			body {
 				padding: 0px;
 				margin: 0px;
+				background-color: #2F4F4F;
+				
+			}
+			#forceBar {
+				
+			}
+			div {
+				font-family: neve;
+			}
+			#wrapper {
+				width:800px;  margin:0 auto;
+				background-image: url(img/menubg.png);
+				box-shadow:0px 0px 30px black;
+				color: #000063;
+			}
+			#instructions {
+				font-family: Arial;
+				width: 96%;
+				padding: 2%;
+				background-color:rgba(0, 0, 0, 0.8);
+				color: white;
+				line-height: 180%;
+			}
+			#infoDiv {
+				width:790px;  margin:0 auto;
+				padding: 5px;
+				display:table;
+				background-color: rgba(11, 11, 11, 0.8);
+				color: white;
+			}
+			.infoElem {
+				width:31%;
+				float:left;
+				padding: 1%;
 			}
 		</style>  
 	</head>
 	
 	<body>
-		<div id='divNomes'>
-			<div id='divNomeJogadorUm'>
-				<p>Insira um nome com pelo menos 3 caracters e uma letra maiúscula para o Jogador Um:</p>
-				<label>Nome: </label><input type='text' id='textName1'>
-				<button onclick="validarNome(1)">Validar!</button>
-				<br /><br />
-				<div id='divJogUm' style='color:red;'></div>
-			</div>
-			<div id='divNomeJogadorDois'>
-				<p>Insira um nome com pelo menos 3 caracters e uma letra maiúscula para o Jogador Dois:</p>
-				<label>Nome: </label><input type='text' id='textName2'>
-				<button onclick="validarNome(2)">Validar!</button>
-				<br /><br />
-				<div id='divJogDois' style='color: red;'></div>
-			</div>
-		</div>
-		<div id='divJogo'>
-		</div>
-		<div id='divVida'>
-		</div>
-		<div id='divFinalJogo'>
-		</div>
+		<div align="center" id="wrapper">
+        <div style="font-size:60px; padding-top:90px; margin-bottom:20px;">ICE WAR</div>
+        <div id="instructions">
+        	Insira dois nomes com no minimo 3 caracteres e uma letra maiúscula.<br>
+        	Jogador 1: <input type='text' id='textName1'> Jogador 2: <input type='text' id='textName2'><br>
+        	<div id="verify" style="color:red;"></div>
+        	<br>
+        	<img src="img/Button_play.png" onclick="verificaNomes();">
+    	</div>
 		<br>
-		<progress max="1500" value="0" id="forceBar"></progress>
+		</div>
+		<div id="infoDiv" align="center">
+			<div class="infoElem">
+				<div id="namePlayer1">Nome jogador 1</div><br>
+				<progress max="5" value="5" id="lifePlayer1"></progress>
+			</div>
+			<div class="infoElem">
+				<progress max="1500" value="0" id="forceBar"></progress>
+			</div>
+			
+			<div class="infoElem">
+				<div id="namePlayer2">Nome jogador 2</div><br>
+				<progress max="5" value="5" id="lifePlayer2"></progress>
+			</div>
+			
+			
+		</div>
+		
 	</body>
 </html>
 
@@ -59,69 +101,31 @@
 	var arrayNroCliques = [];
 
 	$(document).ready(function() {
-		$("#divJogo").hide();
-		$("#divVida").hide();
-		$("#divFinalJogo").hide();
-		$("#forceBar").hide();
+
+		$("#infoDiv").hide();
 	});
 
-	
-	function validarNome(jogador) 
-	{
-		var validated = true;
-
-		if (jogador == 1)
-	    	var nome = $("#textName1").val();
-	    else
-	    	var nome = $("#textName2").val();
-
-	    if (nome.length >= 3) 
-	    {
-		    if (!nome.match(/^(?=.*[A-Z])/))
-		    	validated = false;
+	function verificaNomes() {
+		var validInput=false;
+		var nome1 = $("#textName1").val();
+		var nome2 = $("#textName2").val();
+		if (nome1.length >= 3 && nome2.length >=3) {
+			if (nome1.match(/^(?=.*[A-Z])/) && nome2.match(/^(?=.*[A-Z])/))
+				validInput = true;
+			else
+				$("#verify").html("Por favor, corrija os nomes inseridos!");
 		}
 		else
-			validated = false;
+			$("#verify").html("Por favor, corrija os nomes inseridos!");
 
-		if (validated == false)
-			if (jogador == 1)
-				$("#divJogUm").html('Você precisa inserir um nome com pelo menos 3 letras e uma maiúscula!');
-			else
-				$("#divJogDois").html('Você precisa inserir um nome com pelo menos 3 letras e uma maiúscula!');
-		
-			
-		else 
-		{
-			if (jogador == 1) 
-			{
-				$("#divJogUm").html('Nome validado com sucesso!');
-				nomeJogadorUm = nome;
-			}
-			else
-			{
-				nomeJogadorDois = nome;
-				$("#divJogDois").html('Nome validado com sucesso!');
-			}
-		}
-
-		if (jogador == 1)
-			isNomesValidadoJogUm = validated;
-		else
-			isNomesValidadoJogDois = validated;
-
-		if (isNomesValidadoJogUm && isNomesValidadoJogDois)
-		{
-			isNomesValidadoJogDois = null;
-			isNomesValidadoJogUm = null;
-			validated = null;
-			alert("Nomes dos jogadores estão OK!");
-			$("#divNomes").remove();
-			$("#divJogo").html("<div style='display:inline-block; margin-left: 5px;'>Jogador 1: " + nomeJogadorUm + "</div><div style='display:inline-block; margin-left: 500px;'>Jogador Dois: " + nomeJogadorDois + "</div>");
-			$("#divJogo").show();
-			$("#divVida").show();
-			$("#forceBar").show();
-			currentGame = new gameSpace.Match().initLifes(5);
+		if (validInput) {
+			$("#infoDiv").show();
+			$("#wrapper").empty();
+			$("#namePlayer1").html(nome1);
+			$("#namePlayer2").html(nome2);
+			currentGame = new gameSpace.Match().init();
 			currentGame.startMatch();
 		}
 	}
+
 </script>

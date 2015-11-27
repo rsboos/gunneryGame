@@ -1,20 +1,18 @@
 if (objects === undefined)
   var objects = {};
 
-objects.Ball = function Ball(color,isColider,type,coordinates) {
-    this.init(color,isColider,type,coordinates);
-   	
+objects.Ball = function Ball(background,isColider,type,coordinates) {
+    this.init(background,isColider,type,coordinates);
    	this.initialX = coordinates[0];
    	this.initialY = coordinates[1];
 }
 objects.Ball.prototype = Object.create(objects.PhysicalElement.prototype);
 
 objects.Ball.prototype.render = function(context) {
-	//console.log("rendering ball ");
   context.save();
   context.translate(this.left, this.top);
-  console.log(this.color);
-  context.drawImage(this.color,0,0,17,17);
+
+  context.drawImage(this.background,0,0,17,17);
   context.restore();  
 }
 

@@ -1,8 +1,8 @@
 if (objects === undefined)
   var objects = {};
 
-objects.Floor = function Floor(color,isColider,type,coordinates) {
-    this.init("img/floorbackground.png",isColider,type,coordinates);
+objects.Floor = function Floor(background,isColider,type,coordinates) {
+    this.init(background,isColider,type,coordinates);
 }
 
 objects.Floor.prototype = Object.create(objects.PhysicalElement.prototype);

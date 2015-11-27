@@ -7,10 +7,7 @@ objects.PhysicalElement = function PhysicalElement() {
 
 }
 
-objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates) {
-	
-	console.log(color);
-  
+objects.PhysicalElement.prototype.init=function(background,isColider,type,coordinates) {
     
   this.isColider = isColider;
   this.type = type;
@@ -23,28 +20,24 @@ objects.PhysicalElement.prototype.init=function(color,isColider,type,coordinates
     this.width = coordinates[2];
     this.height = coordinates[3];
   }
-  if (color.length == 7)
-    this.color=color;
+  if (background.length == 7)
+    this.background=background;
   else {
     var myImage = new Image();
-    myImage.src = color; 
-    this.color = myImage;
+    myImage.src = background; 
+    this.background = myImage;
   }
 }
 
 objects.PhysicalElement.prototype.render=function(ctx) { // polimorfismo por inclusao
   ctx.save();
 
-  if (this.color instanceof Image) {
-    
-    //var pat=ctx.createPattern(this.color,'no-repeat');
-    //console.log(ctx);
-    //ctx.fillStyle = pat;
+  if (this.background instanceof Image) {
      ctx.translate(this.left, this.top);
-    ctx.drawImage(this.color,0,0);
+    ctx.drawImage(this.background,0,0);
     }
   else {
-     ctx.fillStyle = this.color;
+     ctx.fillStyle = this.background;
       ctx.translate(this.left, this.top);
   ctx.fillRect(0,0,this.width,this.height);
   }

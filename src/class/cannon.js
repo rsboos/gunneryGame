@@ -1,8 +1,8 @@
 if (objects === undefined)
   var objects = {};
 
-objects.Cannon = function Cannon(color,isColider,type,coordinates,player) {
-    this.init(color,isColider,type,coordinates);
+objects.Cannon = function Cannon(background,isColider,type,coordinates,player) {
+    this.init(background,isColider,type,coordinates);
     this.degrees = 0;
     this.player=player;
     var myImage = new Image();
@@ -12,12 +12,8 @@ objects.Cannon = function Cannon(color,isColider,type,coordinates,player) {
 objects.Cannon.prototype = Object.create(objects.PhysicalElement.prototype);
 objects.Cannon.prototype.constructor = objects.Cannon;
 
-objects.Cannon.prototype.init=function(color,isColider,type,coordinates,player) {
-
-  console.log("init from cannon");
-  
-    
-  this.isColider = isColider;
+objects.Cannon.prototype.init=function(background,isColider,type,coordinates,player) {
+this.isColider = isColider;
   this.type = type;
   this.coordinates = coordinates.slice();
   this.top = this.coordinates[1];
@@ -28,22 +24,21 @@ objects.Cannon.prototype.init=function(color,isColider,type,coordinates,player) 
     this.width = coordinates[2];
     this.height = coordinates[3];
   }
-  if (color.length == 7)
-    this.color=color;
+  if (background.length == 7)
+    this.background=background;
   else {
     var myImage = new Image();
-    myImage.src = color; 
-    this.color = myImage;
+    myImage.src = background; 
+    this.background = myImage;
   }
   
 }
 
 objects.Cannon.prototype.render = function(context) {
 	context.save(); 
-    context.fillStyle = "#000000";
     context.translate( this.left , this.top  );
     
-    context.drawImage(this.color,0,0,this.width,this.height);
+    context.drawImage(this.background,0,0,this.width,this.height);
      context.translate( -8 , -8   );
     context.translate( 35 , 17   );
     context.rotate(180*this.player*Math.PI/180);
@@ -57,7 +52,6 @@ objects.Cannon.prototype.render = function(context) {
 }
 
 objects.Cannon.prototype.makeRotation = function(degrees) {
-	console.log("rotating"+this.degrees);
 	ret = Math.abs(degrees+this.degrees);
 	ret=Math.max(0,ret);
 	ret=Math.min(90,ret);

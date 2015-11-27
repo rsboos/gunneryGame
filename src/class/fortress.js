@@ -1,8 +1,8 @@
 if (objects === undefined)
   var objects = {};
 
-objects.Fortress = function Fortress(color,isColider,type,coordinates,player) {
-    this.init("img/fort.png",isColider,type,coordinates);
+objects.Fortress = function Fortress(background,isColider,type,coordinates,player) {
+    this.init(background,isColider,type,coordinates);
     cannonHeight = 40;
     cannonWidth = 50;
     var cannonLeft;
@@ -15,17 +15,16 @@ objects.Fortress = function Fortress(color,isColider,type,coordinates,player) {
 
 objects.Fortress.prototype = Object.create(objects.PhysicalElement.prototype);
 
-
 objects.Fortress.prototype.render = function(ctx) {
   this.cannon.render(ctx);
 	  ctx.save();
 
-  if (this.color instanceof Image) {
+  if (this.background instanceof Image) {
      ctx.translate(this.left, this.top);
-    ctx.drawImage(this.color,0,0,this.width,this.height);
+    ctx.drawImage(this.background,0,0,this.width,this.height);
     }
   else {
-     ctx.fillStyle = this.color;
+     ctx.fillStyle = this.background;
       ctx.translate(this.left, this.top);
   ctx.fillRect(0,0,this.width,this.height);
   }
