@@ -69,12 +69,14 @@ gameSpace.Match.prototype.startMatch = function()
 	var match = this;
 	document.addEventListener('keydown', function(e) 
 	{
-		var i;
-		for (i=0; i < board.elements.length; i++) {
-			if (board.elements[i] instanceof objects.Fortress && board.elements[i].player == match.WhoPlays) { // explicar que da certo porque faz curto circuito
-				cannonElem = board.elements[i].cannon;
+		var getCannonElem =function (elem) {
+			if (elem instanceof objects.Fortress && elem.player == match.WhoPlays) { // explicar que da certo porque faz curto circuito
+				cannonElem = elem.cannon;
 			}
 		}
+		var i;
+		board.elements.forEach(getCannonElem);
+		
 			if (e.which==38) // UP
     			cannonElem.makeRotation(-1);
 		    else if (e.which==40) // DOWN
